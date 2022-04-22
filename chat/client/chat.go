@@ -8,14 +8,12 @@ import (
 	"io"
 	"log"
 	"os"
-	"time"
 )
 
 func doChat(c pb.ChatServiceClient) {
+
 	for {
-
 		stream, err := c.Chat(context.Background())
-
 		if err != nil {
 			log.Fatalf("Error while creating stream: %v\n", err)
 		}
@@ -25,17 +23,11 @@ func doChat(c pb.ChatServiceClient) {
 		inputReader := bufio.NewReader(os.Stdin)
 		input, _ := inputReader.ReadString('\n')
 		req.Message = input
-		waitc := make(chan struct{})
-		go func() {
 
-			stream.Send(req)
-			time.Sleep(1 * time.Second)
-
-			stream.CloseSend()
-
-		}()
+		stream.Send(req)
 
 		go func() {
+
 			for {
 				res, err := stream.Recv()
 				if err == io.EOF {
@@ -48,10 +40,7 @@ func doChat(c pb.ChatServiceClient) {
 				fmt.Printf("Bob-> %v", res.Response)
 			}
 
-			close(waitc)
-
 		}()
 
-		<-waitc
 	}
 }
