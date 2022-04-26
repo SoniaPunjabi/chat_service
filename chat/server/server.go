@@ -2,12 +2,13 @@ package main
 
 import (
 	"bufio"
-	pb "chat_service/chat/proto"
 	"fmt"
 	"io"
 	"log"
 	"net"
 	"os"
+
+	pb "github.com/SoniaPunjabi/chat_service/chat/proto"
 
 	"google.golang.org/grpc"
 )
