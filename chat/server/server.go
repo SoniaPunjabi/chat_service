@@ -6,11 +6,30 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net"
 	"os"
+
+	"google.golang.org/grpc"
 )
 
-//var resp = make(chan string)
+var addr string = "0.0.0.0:50051"
 
+type Server struct {
+	pb.ChatServiceServer
+}
+
+func main() {
+	lis, err := net.Listen("tcp", addr)
+	if err != nil {
+		log.Fatalf("Failed to listen on: %v\n", err)
+	}
+	log.Printf("listening on %s", addr)
+	s := grpc.NewServer()
+	pb.RegisterChatServiceServer(s, &Server{})
+	if err = s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve %v", err)
+	}
+}
 func (s *Server) Chat(stream pb.ChatService_ChatServer) error {
 
 	for {
