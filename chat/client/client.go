@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	pb "chat_service/chat/proto"
+	pb "github.com/SoniaPunjabi/chat_service/chat/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

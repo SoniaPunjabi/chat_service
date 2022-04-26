@@ -15,7 +15,7 @@ RUN go mod init chat_service
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 RUN go get google.golang.org/grpc
-RUN go get github.com/SoniaPunjabi/chat_service/chat/proto
+RUN go get github.com/SoniaPunjabi/chat_service
 
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .

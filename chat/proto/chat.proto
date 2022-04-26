@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package greet;
+package chat;
 
-option go_package = "chat_service/chat/proto";
+option go_package = "github.com/SoniaPunjabi/chat_service/chat/proto";
 
 message ChatRequest {
   string message = 1;

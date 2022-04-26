@@ -1,4 +1,4 @@
-module chat_service
+module github.com/SoniaPunjabi/chat_service
 
 go 1.17
 
