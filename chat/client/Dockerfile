@@ -3,16 +3,19 @@
 # Start from the latest golang base image
 FROM golang:latest
 LABEL maintainer="Sonia <sonia@rhizicube.ai>"
-
+ENV GO111MODULE=on
 # Set the Current Working Directory inside the container
 WORKDIR /chat_service
+#COPY go.mod .
+#COPY go.sum .
 
 # Copy go mod and sum files
 RUN go mod init chat_service
-RUN go mod tidy
 
 # Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
+RUN go get google.golang.org/grpc
+RUN go get github.com/SoniaPunjabi/chat_service/chat/proto
 
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
@@ -20,7 +23,7 @@ COPY . .
 # EXPOSE 9093
 # Command to run the executable
 
-RUN go env -w GO111MODULE=auto
-EXPOSE 50051
+
+EXPOSE 8080
 
 CMD ["go", "run", "client.go"]
